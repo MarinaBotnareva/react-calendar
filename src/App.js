@@ -1,25 +1,58 @@
-import logo from './logo.svg';
+import React from "react";
+import {setDate} from 'date-fns'
 import './App.css';
+import CurrentDate from "./components/LeftSide/CurrentDate";
+import CurrentMonth from "./components/RightSide/CurrentMonth";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      today: new Date(),
+    }
+  }
+
+  NextMonth = () => {
+    this.setState((state) => {
+      return {
+        ...state,
+        today: state.today.getMonth() === 12 ? new Date(state.today.getFullYear() + 1, 0, 1) : new Date(state.today.getFullYear(), state.today.getMonth() + 1, 1) 
+      }
+    })
+  
+  };
+  
+  PrevMonth = () => {
+    this.setState((state) => {
+      return {
+        ...state,
+        today: state.today.getMonth() === 1 ? new Date(state.today.getFullYear() - 1, 12, 1) : new Date(state.today.getFullYear(), state.today.getMonth() - 1, 1) 
+      }
+    })
+  }
+
+  getValue = (selectState) => {
+    this.setState((state)=>{
+      return {
+        ...state,
+        ...selectState
+      }
+    })
+  }
+
+  render() {
+    const{today} = this.state;
+
+    return (
+      
+         <main className="calendar">
+          <CurrentDate date={today}/>
+          <CurrentMonth date={today} NextMonth={this.NextMonth} PrevMonth={this.PrevMonth} getValue={this.getValue}/>
+        </main>
+    );
+  }
 }
 
 export default App;
+
