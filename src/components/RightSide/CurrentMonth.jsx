@@ -25,7 +25,9 @@ class MyCalendar extends React.Component {
         className="title"
         ref={element => this.monthSelect = element}
         onChange={this.SelectChange}
-        defaultValue={this.props.date.getMonth()}>
+        defaultValue={this.props.date.getMonth()}
+        value={this.props.date.getMonth()}
+        >
           
           {monthNames.map((name, index) => 
             <option key={name} value={index}>{name}</option>
@@ -35,13 +37,14 @@ class MyCalendar extends React.Component {
         className="title" 
         ref={element => this.yearSelect = element}
         onChange={this.SelectChange}
-        defaultValue={this.props.date.getFullYear()}>
+        defaultValue={this.props.date.getFullYear()}
+        value={this.props.date.getFullYear()}
+        >
           {years.map((year) => 
             <option key={year} value={year}>{year}</option>
           )}</select>
         <button className="title" onClick={this.props.NextMonth}>{'>'}</button>
         </div>
-        <h5 >{monthNames[this.props.date.getMonth()]} {this.props.date.getFullYear()}</h5>
         <MonthTable date = {this.props.date}/>
       </div>
     )
